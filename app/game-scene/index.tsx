@@ -1,4 +1,7 @@
+import { Cube } from 'features/objects/cube';
+import { GameObject } from 'features/objects/game-object';
 import { useLayoutEffect, useRef } from 'react';
+import { Dodeca } from '../../features/objects/dodeca';
 import { Renderer } from '../../features/renderer';
 import Scene from '../../features/scene';
 
@@ -6,7 +9,27 @@ export function GameScene() {
 	const gameRef = useRef<HTMLCanvasElement>(null);
 	const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
 	const renderer = new Renderer();
-	const scene = new Scene(renderer);
+
+	const gameObjects = [
+		new GameObject(
+			{ x: 1, y: 0, z: 2 },
+			{ x: 0.3, y: 0.5, z: 0.1 },
+			new Cube(),
+		),
+		new GameObject(
+			{ x: -1, y: -1, z: 3 },
+			{ x: 3, y: 2, z: 1 },
+			new Cube(),
+			true,
+		),
+		new GameObject(
+			{ x: -3, y: 3, z: 7 },
+			{ x: 0, y: 0, z: 0 },
+			new Dodeca(),
+		),
+	];
+
+	const scene = new Scene(renderer, gameObjects);
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useLayoutEffect(() => {

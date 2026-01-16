@@ -1,41 +1,33 @@
-import { Cube } from '../objects/cube';
+import type { GameObject } from 'features/objects/game-object';
 import type { Renderer } from '../renderer';
-import type { Vector3 } from '../shared/types';
 import { Rotate } from '../transform/rotate';
+import { Translate } from '../transform/translate';
 import { Runtime } from './runtime';
 
-const DEFAULT_FORCE = {
-	x: 0,
-	y: 0,
-	z: 0,
-};
-
 export default class Scene {
-	private rotation = {
+	private CONSTANT_ROTATION = {
 		x: 0.3 * Math.PI,
 		y: 0.2 * Math.PI,
 		z: 0.1 * Math.PI,
 	};
 
-	private rotate = new Rotate();
-
-	private desenturilzedCoordinates = {
+	private CONSTANT_FORCE = {
 		x: 0,
 		y: 0,
-		z: 5,
+		z: 0,
 	};
 
-	constructor(private renderer: Renderer) {}
+	private rotate = new Rotate();
+	private translate = new Translate();
+
+	constructor(
+		private renderer: Renderer,
+		private gameObjects: GameObject[],
+	) {}
 
 	frame = () => {
 		const deltaTime = 1 / this.runtime.FPS;
 
-		this.desenturilzedCoordinates.x += DEFAULT_FORCE.x * deltaTime;
-		this.desenturilzedCoordinates.y += DEFAULT_FORCE.y * deltaTime;
-		this.desenturilzedCoordinates.z += DEFAULT_FORCE.z * deltaTime;
-		this.rotation.x += 0.1 * Math.PI * deltaTime;
-		this.rotation.y += 0.1 * Math.PI * deltaTime;
-		this.rotation.z += 0.1 * Math.PI * deltaTime;
 		this.renderer.clear();
 
 		// Cube.faces.forEach((face) => {
@@ -48,27 +40,42 @@ export default class Scene {
 		// 		);
 		// 	}
 		// });
-		Cube.faces.forEach((face, index: number) => {
-			// TODO: Add Z-buffer
-			this.renderer.drawFace(
-				face.map((index) =>
-					this.translate(
-						this.rotate.rotateEuler(
-							Cube.vertices[index],
-							this.rotation,
+		this.gameObjects.forEach((gameObject) => {
+			const { object, transform, rotation } = gameObject;
+			const { faces, vertices } = object;
+
+			transform.x += this.CONSTANT_FORCE.x * deltaTime;
+			transform.y += this.CONSTANT_FORCE.y * deltaTime;
+			transform.z += this.CONSTANT_FORCE.z * deltaTime;
+
+			rotation.x += this.CONSTANT_ROTATION.x * deltaTime;
+			rotation.y += this.CONSTANT_ROTATION.y * deltaTime;
+			rotation.z += this.CONSTANT_ROTATION.z * deltaTime;
+
+			faces.forEach((face, index: number) => {
+				// TODO: Add Z-buffer
+				this.renderer.drawFace(
+					face.map((index) =>
+						this.translate.translate(
+							this.rotate.rotateEuler(vertices[index], rotation),
+							gameObject.transform,
 						),
 					),
-				),
-				index,
-			);
+					index,
+				);
+			});
+			if (gameObject.showPoints) {
+				vertices.forEach((v, index: number) => {
+					this.renderer.drawPoint(
+						this.translate.translate(
+							this.rotate.rotateEuler(v, rotation),
+							gameObject.transform,
+						),
+						index,
+					);
+				});
+			}
 		});
-
-		// Cube.vertices.forEach((v: Vector3, index: number) => {
-		//     this.renderer.drawPoint(
-		//         this.translate(this.rotate.rotateEuler(v, this.rotation)),
-		//         index,
-		//     );
-		// });
 	};
 
 	private runtime = new Runtime(this.frame);
@@ -76,17 +83,16 @@ export default class Scene {
 	run = this.runtime.run;
 	stop = this.runtime.stop;
 	reset = () =>
-		this.runtime.reset([
-			[{ x: 0, y: 0, z: 5 }, this.desenturilzedCoordinates],
-			[{ x: 0, y: 0, z: 0 }, this.rotation],
-		]);
-
-	private translate = (point: Vector3) => {
-		return {
-			...point,
-			x: point.x + this.desenturilzedCoordinates.x,
-			y: point.y + this.desenturilzedCoordinates.y,
-			z: point.z + this.desenturilzedCoordinates.z,
-		};
-	};
+		this.runtime.reset(
+			this.gameObjects.map(
+				(gameObject) => [
+					gameObject.initialTransform,
+					gameObject.transform,
+				],
+				this.gameObjects.map((gameObject) => [
+					gameObject.initialRotation,
+					gameObject.rotation,
+				]),
+			),
+		);
 }

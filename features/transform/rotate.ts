@@ -1,41 +1,43 @@
 import type { Vector3 } from 'features/shared/types';
 
 export class Rotate {
-	private rotateY(p: Vector3, a: number): Vector3 {
+	private rotateX(p: Vector3, a: number): Vector3 {
+		const { x, y, z } = p;
 		const c = Math.cos(a),
 			s = Math.sin(a);
 		return {
-			x: p.x * c - p.z * s,
-			y: p.y,
-			z: p.x * s + p.z * c,
+			x: x,
+			y: y * c - z * s,
+			z: y * s + z * c,
 		};
 	}
-
-	private rotateX(p: Vector3, a: number): Vector3 {
+	private rotateY(p: Vector3, a: number): Vector3 {
+		const { x, y, z } = p;
 		const c = Math.cos(a),
 			s = Math.sin(a);
 		return {
-			x: p.x,
-			y: p.y * c - p.z * s,
-			z: p.y * s + p.z * c,
+			x: x * c - z * s,
+			y: y,
+			z: x * s + z * c,
 		};
 	}
 
 	private rotateZ(p: Vector3, a: number): Vector3 {
+		const { x, y, z } = p;
 		const c = Math.cos(a),
 			s = Math.sin(a);
 		return {
-			x: p.x * c - p.y * s,
-			y: p.x * s + p.y * c,
-			z: p.z,
+			x: x * c - y * s,
+			y: x * s + y * c,
+			z: z,
 		};
 	}
 
 	public rotateEuler(p: Vector3, rot: Vector3): Vector3 {
-		let q = p;
-		q = this.rotateX(q, rot.x);
-		q = this.rotateY(q, rot.y);
-		q = this.rotateZ(q, rot.z);
-		return q;
+		const { x, y, z } = rot;
+		const x_rotated = this.rotateX(p, x);
+		const y_rotated = this.rotateY(x_rotated, y);
+		const z_rotated = this.rotateZ(y_rotated, z);
+		return z_rotated;
 	}
 }
