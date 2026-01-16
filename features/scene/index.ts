@@ -1,4 +1,5 @@
 import type { GameObject } from 'features/objects/game-object';
+import type { Vector3 } from 'features/shared/vector';
 import type { Renderer } from '../renderer';
 import { Rotate } from '../transform/rotate';
 import { Translate } from '../transform/translate';
@@ -21,9 +22,7 @@ export default class Scene {
 		private gameObjects: GameObject[],
 	) {}
 
-	frame = () => {
-		const deltaTime = 1 / this.runtime.FPS;
-
+	frame = (deltaTime: number) => {
 		this.renderer.clear();
 
 		this.gameObjects.forEach((gameObject) => {
@@ -31,11 +30,10 @@ export default class Scene {
 			const { faces, vertices } = object;
 
 			transform.add(this.CONSTANT_FORCE, deltaTime);
-
 			rotation.add(this.CONSTANT_ROTATION, deltaTime);
 
 			faces.forEach((face, index: number) => {
-				// TODO: Add Z-buffer
+				// TODO: Add Culling afterwards painters algorithm
 				this.renderer.drawFace(
 					face.map((index) =>
 						this.translate.translate(
@@ -65,17 +63,12 @@ export default class Scene {
 
 	run = this.runtime.run;
 	stop = this.runtime.stop;
-	reset = () =>
-		this.runtime.reset(
-			this.gameObjects.map(
-				(gameObject) => [
-					gameObject.initialTransform,
-					gameObject.transform,
-				],
-				this.gameObjects.map((gameObject) => [
-					gameObject.initialRotation,
-					gameObject.rotation,
-				]),
-			),
-		);
+	reset = () => {
+		const pairs: [Vector3, Vector3][] = [];
+		this.gameObjects.forEach((go) => {
+			pairs.push([go.initialTransform, go.transform]);
+			pairs.push([go.initialRotation, go.rotation]);
+		});
+		this.runtime.reset(pairs);
+	};
 }

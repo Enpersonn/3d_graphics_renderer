@@ -8,7 +8,6 @@ import Scene from '../../features/scene';
 export function GameScene() {
 	const gameRef = useRef<HTMLCanvasElement>(null);
 	const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
-	const renderer = new Renderer();
 
 	const gameObjects = [
 		new GameObject(
@@ -33,7 +32,15 @@ export function GameScene() {
 		),
 	];
 
-	const scene = new Scene(renderer, gameObjects);
+	const rendererRef = useRef<Renderer | null>(null);
+	if (!rendererRef.current) rendererRef.current = new Renderer();
+
+	const sceneRef = useRef<Scene | null>(null);
+	if (!sceneRef.current)
+		sceneRef.current = new Scene(rendererRef.current, gameObjects);
+
+	const renderer = rendererRef.current;
+	const scene = sceneRef.current;
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useLayoutEffect(() => {
@@ -47,7 +54,9 @@ export function GameScene() {
 		if (!ctxRef.current) return;
 		renderer.setGame(canvas);
 		renderer.setContext(ctxRef.current);
-		scene.frame();
+		scene.frame(0);
+
+		return () => scene.stop();
 	}, []);
 
 	return (
