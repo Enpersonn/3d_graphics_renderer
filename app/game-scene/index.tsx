@@ -2,7 +2,7 @@ import { useLayoutEffect, useRef } from 'react';
 import { Renderer } from '../../features/renderer';
 import Scene from '../../features/scene';
 
-export function Welcome() {
+export function GameScene() {
 	const gameRef = useRef<HTMLCanvasElement>(null);
 	const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
 	const renderer = new Renderer();
