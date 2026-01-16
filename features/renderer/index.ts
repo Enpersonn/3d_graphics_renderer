@@ -67,6 +67,7 @@ export class Renderer {
         const ctx = this.ctx;
         if (!ctx || !this.game) return;
         ctx.beginPath();
+
         const indexPointScreenSpace = points.map((point) =>
             worldToScreen(point, this.game as HTMLCanvasElement),
         );

@@ -1,7 +1,5 @@
 import type { Vector3 } from "./types";
 
-
-
 export class Rotate {
     private rotateY(p: Vector3, a: number): Vector3 {
         const c = Math.cos(a), s = Math.sin(a);

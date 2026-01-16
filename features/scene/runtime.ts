@@ -1,3 +1,4 @@
+import type { Vector3 } from "~/welcome/types";
 
 
 export class Runtime {
@@ -19,5 +20,8 @@ export class Runtime {
         this.frame();
     };
 
-
+    reset = (values: [Vector3, Vector3][]) => {
+        for (const [p, q] of values) Object.assign(q, p);
+        this.frame();
+    };
 }

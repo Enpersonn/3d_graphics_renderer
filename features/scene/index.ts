@@ -38,17 +38,18 @@ export default class Scene {
         this.rotation.z += 0.1 * Math.PI * deltaTime;
         this.renderer.clear();
 
-        // Dodeca.faces.forEach((face) => {
+        // Cube.faces.forEach((face) => {
         // 	for (let i = 0; i < face.length; i++) {
-        // 		const pointA = Dodeca.points[face[i]];
-        // 		const pointB = Dodeca.points[face[(i + 1) % face.length]];
-        // 		renderer.drawLine(
-        // 			translate(rotate.rotateEuler(pointA, rotation)),
-        // 			translate(rotate.rotateEuler(pointB, rotation)),
+        // 		const pointA = Cube.points[face[i]];
+        // 		const pointB = Cube.points[face[(i + 1) % face.length]];
+        // 		this.renderer.drawLine(
+        // 			this.translate(this.rotate.rotateEuler(pointA, this.rotation)),
+        // 			this.translate(this.rotate.rotateEuler(pointB, this.rotation)),
         // 		);
         // 	}
         // });
         Cube.faces.forEach((face, index: number) => {
+            // TODO: Add Z-buffer
             this.renderer.drawFace(
                 face.map((index) =>
                     this.translate(
@@ -62,31 +63,31 @@ export default class Scene {
             );
         });
 
-        Cube.vertices.forEach((v: Vector3, index: number) => {
-            this.renderer.drawPoint(
-                this.translate(this.rotate.rotateEuler(v, this.rotation)),
-                index,
-            );
-        });
+        // Cube.vertices.forEach((v: Vector3, index: number) => {
+        //     this.renderer.drawPoint(
+        //         this.translate(this.rotate.rotateEuler(v, this.rotation)),
+        //         index,
+        //     );
+        // });
     };
 
     private runtime = new Runtime(this.frame);
 
     run = this.runtime.run;
     stop = this.runtime.stop;
-    reset = () => {
-        this.desenturilzedCoordinates = {
-            x: 0,
-            y: 0,
-            z: 5,
-        };
-        this.rotation = {
-            x: 0,
-            y: 0,
-            z: 0,
-        };
-        this.frame();
-    };
+    reset = () =>
+        this.runtime.reset([
+            [
+
+                { x: 0, y: 0, z: 5 },
+                this.desenturilzedCoordinates,
+            ],
+            [
+                { x: 0, y: 0, z: 0 },
+                this.rotation,
+            ],
+        ]);
+
     private translate = (point: Vector3) => {
         return {
             ...point,
