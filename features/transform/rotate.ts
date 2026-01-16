@@ -1,36 +1,24 @@
-import type { Vector3 } from 'features/shared/types';
+import { Vector3 } from 'features/shared/vector';
 
 export class Rotate {
 	private rotateX(p: Vector3, a: number): Vector3 {
 		const { x, y, z } = p;
 		const c = Math.cos(a),
 			s = Math.sin(a);
-		return {
-			x: x,
-			y: y * c - z * s,
-			z: y * s + z * c,
-		};
+		return new Vector3(x, y * c - z * s, y * s + z * c);
 	}
 	private rotateY(p: Vector3, a: number): Vector3 {
 		const { x, y, z } = p;
 		const c = Math.cos(a),
 			s = Math.sin(a);
-		return {
-			x: x * c - z * s,
-			y: y,
-			z: x * s + z * c,
-		};
+		return new Vector3(x * c - z * s, y, x * s + z * c);
 	}
 
 	private rotateZ(p: Vector3, a: number): Vector3 {
 		const { x, y, z } = p;
 		const c = Math.cos(a),
 			s = Math.sin(a);
-		return {
-			x: x * c - y * s,
-			y: x * s + y * c,
-			z: z,
-		};
+		return new Vector3(x * c - y * s, x * s + y * c, z);
 	}
 
 	public rotateEuler(p: Vector3, rot: Vector3): Vector3 {

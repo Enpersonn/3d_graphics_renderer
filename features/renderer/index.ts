@@ -1,4 +1,4 @@
-import type { Vector3 } from '../shared/types';
+import type { Vector3 } from '../shared/vector';
 import { worldToScreen } from './transform';
 
 export class Renderer {

@@ -1,21 +1,18 @@
 import type { GameObject } from 'features/objects/game-object';
+import { Vector3 } from 'features/shared/vector';
 import type { Renderer } from '../renderer';
 import { Rotate } from '../transform/rotate';
 import { Translate } from '../transform/translate';
 import { Runtime } from './runtime';
 
 export default class Scene {
-	private CONSTANT_ROTATION = {
-		x: 0.3 * Math.PI,
-		y: 0.2 * Math.PI,
-		z: 0.1 * Math.PI,
-	};
+	private CONSTANT_ROTATION = new Vector3(
+		0.3 * Math.PI,
+		0.2 * Math.PI,
+		0.1 * Math.PI,
+	);
 
-	private CONSTANT_FORCE = {
-		x: 0,
-		y: 0,
-		z: 0,
-	};
+	private CONSTANT_FORCE = new Vector3(0, 0, 0);
 
 	private rotate = new Rotate();
 	private translate = new Translate();
@@ -30,16 +27,6 @@ export default class Scene {
 
 		this.renderer.clear();
 
-		// Cube.faces.forEach((face) => {
-		// 	for (let i = 0; i < face.length; i++) {
-		// 		const pointA = Cube.points[face[i]];
-		// 		const pointB = Cube.points[face[(i + 1) % face.length]];
-		// 		this.renderer.drawLine(
-		// 			this.translate(this.rotate.rotateEuler(pointA, this.rotation)),
-		// 			this.translate(this.rotate.rotateEuler(pointB, this.rotation)),
-		// 		);
-		// 	}
-		// });
 		this.gameObjects.forEach((gameObject) => {
 			const { object, transform, rotation } = gameObject;
 			const { faces, vertices } = object;
@@ -48,16 +35,17 @@ export default class Scene {
 			transform.y += this.CONSTANT_FORCE.y * deltaTime;
 			transform.z += this.CONSTANT_FORCE.z * deltaTime;
 
-			rotation.x += this.CONSTANT_ROTATION.x * deltaTime;
-			rotation.y += this.CONSTANT_ROTATION.y * deltaTime;
-			rotation.z += this.CONSTANT_ROTATION.z * deltaTime;
+			const newRotation = rotation.add(this.CONSTANT_ROTATION, deltaTime);
 
 			faces.forEach((face, index: number) => {
 				// TODO: Add Z-buffer
 				this.renderer.drawFace(
 					face.map((index) =>
 						this.translate.translate(
-							this.rotate.rotateEuler(vertices[index], rotation),
+							this.rotate.rotateEuler(
+								vertices[index],
+								newRotation,
+							),
 							gameObject.transform,
 						),
 					),
@@ -68,7 +56,7 @@ export default class Scene {
 				vertices.forEach((v, index: number) => {
 					this.renderer.drawPoint(
 						this.translate.translate(
-							this.rotate.rotateEuler(v, rotation),
+							this.rotate.rotateEuler(v, newRotation),
 							gameObject.transform,
 						),
 						index,

@@ -1,4 +1,4 @@
-import type { Vector3 } from 'features/shared/types';
+import type { Vector3 } from 'features/shared/vector';
 
 export class Runtime {
 	private interval?: NodeJS.Timeout;
