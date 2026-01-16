@@ -63,7 +63,7 @@ export class Renderer {
 		this.ctx.stroke();
 	}
 
-	drawFace(points: Vector3[], i: number) {
+	drawFace(points: Vector3[], i: number, color: string) {
 		const ctx = this.ctx;
 		if (!ctx || !this.game) return;
 		ctx.beginPath();
@@ -76,14 +76,10 @@ export class Renderer {
 			ctx.lineTo(indexPointScreenSpace[i].x, indexPointScreenSpace[i].y);
 		}
 
-		const color1 = `rgba(255, 80, 80, 0.5)`;
-		const color2 = `rgba(80, 255, 80, 0.5)`;
-		const color3 = `rgba(80, 80, 255, 0.5)`;
-
 		ctx.closePath();
 		ctx.stroke();
 
-		ctx.fillStyle = i % 3 === 0 ? color1 : i % 3 === 1 ? color2 : color3;
+		ctx.fillStyle = color;
 		ctx.fill();
 	}
 }

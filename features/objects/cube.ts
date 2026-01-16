@@ -1,15 +1,16 @@
 import type { Object3D } from 'features/objects/types';
+import { Vector3 } from 'features/shared/vector';
 
 const vertices = [
-	{ x: 0.5, y: 0.5, z: 0.5 },
-	{ x: -0.5, y: 0.5, z: 0.5 },
-	{ x: -0.5, y: -0.5, z: 0.5 },
-	{ x: 0.5, y: -0.5, z: 0.5 },
+	new Vector3(0.5, 0.5, 0.5),
+	new Vector3(-0.5, 0.5, 0.5),
+	new Vector3(-0.5, -0.5, 0.5),
+	new Vector3(0.5, -0.5, 0.5),
 
-	{ x: 0.5, y: 0.5, z: -0.5 },
-	{ x: -0.5, y: 0.5, z: -0.5 },
-	{ x: -0.5, y: -0.5, z: -0.5 },
-	{ x: 0.5, y: -0.5, z: -0.5 },
+	new Vector3(0.5, 0.5, -0.5),
+	new Vector3(-0.5, 0.5, -0.5),
+	new Vector3(-0.5, -0.5, -0.5),
+	new Vector3(0.5, -0.5, -0.5),
 ];
 
 const faces = [

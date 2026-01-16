@@ -1,32 +1,33 @@
+import { Vector3 } from 'features/shared/vector';
 import type { Object3D } from './types';
 
 const PHI = (1 + Math.sqrt(5)) / 2;
 const INV_PHI = 1 / PHI;
 
 const points = [
-	{ x: 1, y: 1, z: 1 },
-	{ x: 1, y: 1, z: -1 },
-	{ x: 1, y: -1, z: 1 },
-	{ x: 1, y: -1, z: -1 },
-	{ x: -1, y: 1, z: 1 },
-	{ x: -1, y: 1, z: -1 },
-	{ x: -1, y: -1, z: 1 },
-	{ x: -1, y: -1, z: -1 },
+	new Vector3(1, 1, 1),
+	new Vector3(1, 1, -1),
+	new Vector3(1, -1, 1),
+	new Vector3(1, -1, -1),
+	new Vector3(-1, 1, 1),
+	new Vector3(-1, 1, -1),
+	new Vector3(-1, -1, 1),
+	new Vector3(-1, -1, -1),
 
-	{ x: 0, y: INV_PHI, z: PHI },
-	{ x: 0, y: INV_PHI, z: -PHI },
-	{ x: 0, y: -INV_PHI, z: PHI },
-	{ x: 0, y: -INV_PHI, z: -PHI },
+	new Vector3(0, INV_PHI, PHI),
+	new Vector3(0, INV_PHI, -PHI),
+	new Vector3(0, -INV_PHI, PHI),
+	new Vector3(0, -INV_PHI, -PHI),
 
-	{ x: INV_PHI, y: PHI, z: 0 },
-	{ x: INV_PHI, y: -PHI, z: 0 },
-	{ x: -INV_PHI, y: PHI, z: 0 },
-	{ x: -INV_PHI, y: -PHI, z: 0 },
+	new Vector3(INV_PHI, PHI, 0),
+	new Vector3(INV_PHI, -PHI, 0),
+	new Vector3(-INV_PHI, PHI, 0),
+	new Vector3(-INV_PHI, -PHI, 0),
 
-	{ x: PHI, y: 0, z: INV_PHI },
-	{ x: PHI, y: 0, z: -INV_PHI },
-	{ x: -PHI, y: 0, z: INV_PHI },
-	{ x: -PHI, y: 0, z: -INV_PHI },
+	new Vector3(PHI, 0, INV_PHI),
+	new Vector3(PHI, 0, -INV_PHI),
+	new Vector3(-PHI, 0, INV_PHI),
+	new Vector3(-PHI, 0, -INV_PHI),
 ];
 
 const faces = [

@@ -7,15 +7,16 @@ export class GameObject {
 	public transform = this.initialTransform;
 	public rotation = this.initialRotation;
 
-	public faceColor: string = '#93f893';
+	public faceColor;
 	public showPoints: boolean = false;
 	public object: Object3D;
 
 	constructor(
-		transform = new Vector3(0, 0, 0),
-		rotation = new Vector3(0, 0, 0),
+		transform = { x: 0, y: 0, z: 0 },
+		rotation = { x: 0, y: 0, z: 0 },
 		object: Object3D,
 		showPoints: boolean = false,
+		faceColor: string = '#93f893',
 	) {
 		this.initialTransform = new Vector3(
 			transform.x,
@@ -27,5 +28,6 @@ export class GameObject {
 		this.rotation = this.initialRotation;
 		this.object = object;
 		this.showPoints = showPoints;
+		this.faceColor = faceColor;
 	}
 }

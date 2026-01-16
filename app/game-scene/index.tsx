@@ -15,6 +15,8 @@ export function GameScene() {
 			{ x: 1, y: 0, z: 2 },
 			{ x: 0.3, y: 0.5, z: 0.1 },
 			new Cube(),
+			false,
+			'#66ddec',
 		),
 		new GameObject(
 			{ x: -1, y: -1, z: 3 },
@@ -26,6 +28,8 @@ export function GameScene() {
 			{ x: -3, y: 3, z: 7 },
 			{ x: 0, y: 0, z: 0 },
 			new Dodeca(),
+			false,
+			'#ae259a',
 		),
 	];
 
