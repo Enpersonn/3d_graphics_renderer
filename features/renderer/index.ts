@@ -79,11 +79,36 @@ export class Renderer {
 		ctx.closePath();
 		ctx.stroke();
 
-		const debugColor1 = `#ff0000`;
-		const debugColor2 = `#00ff00`;
-		const debugColor3 = `#0000ff`;
-		ctx.fillStyle =
-			i % 3 === 0 ? debugColor1 : i % 3 === 1 ? debugColor2 : debugColor3;
+		// const debugColor1 = `#ff0000`;
+		// const debugColor2 = `#00ff00`;
+		// const debugColor3 = `#0000ff`;
+		// ctx.fillStyle =
+		// 	i % 3 === 0 ? debugColor1 : i % 3 === 1 ? debugColor2 : debugColor3;
+		ctx.fillStyle = color;
 		ctx.fill();
+	}
+
+	renderSkyBox(viewPosition: Vector3) {
+		const ctx = this.ctx;
+		if (!ctx) return;
+
+		const zenithColor = '#607aa4';
+		const horizonColor = '#dffcfe';
+		const groundColor = '#69625c';
+
+		const calculateHorizonPosition = (viewPosition: Vector3) => {
+			return viewPosition.y + 100;
+		};
+
+		const skyBoxGradient = ctx.createLinearGradient(0, 0, 0, this.height);
+		skyBoxGradient.addColorStop(0, zenithColor);
+		skyBoxGradient.addColorStop(0.45, zenithColor);
+		skyBoxGradient.addColorStop(0.5, horizonColor);
+		skyBoxGradient.addColorStop(0.55, groundColor);
+		skyBoxGradient.addColorStop(1, groundColor);
+
+		ctx.fillStyle = skyBoxGradient;
+
+		ctx.fillRect(0, 0, this.width, this.height);
 	}
 }

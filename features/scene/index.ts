@@ -7,14 +7,6 @@ import { Translate } from '../transform/translate';
 import { Runtime } from './runtime';
 
 export default class Scene {
-	private CONSTANT_ROTATION = {
-		x: 0.3 * Math.PI,
-		y: 0.2 * Math.PI,
-		z: 0.1 * Math.PI,
-	};
-
-	private CONSTANT_FORCE = { x: 0, y: 0, z: 0 };
-
 	private rotate = new Rotate();
 	private translate = new Translate();
 
@@ -27,13 +19,14 @@ export default class Scene {
 
 	frame = (deltaTime: number) => {
 		this.renderer.clear();
+		this.renderer.renderSkyBox(this.viewPosition);
 
 		this.gameObjects.forEach((gameObject) => {
 			const { object, transform, rotation } = gameObject;
 			const { faces, vertices } = object;
 
-			transform.add(this.CONSTANT_FORCE, deltaTime);
-			rotation.add(this.CONSTANT_ROTATION, deltaTime);
+			transform.add(gameObject.transformForce, deltaTime);
+			rotation.add(gameObject.rotationForce, deltaTime);
 
 			for (let i = 0; i < faces.length; i++) {
 				const face = faces[i];
@@ -47,22 +40,21 @@ export default class Scene {
 					v.sub(this.viewPosition),
 				);
 
-				if (!checkFace(vectorVertices, this.viewPosition)) {
-					continue;
-				}
+				if (!checkFace(vectorVertices, this.viewPosition)) continue;
 				this.renderer.drawFace(vectorVertices, i, gameObject.faceColor);
 			}
-			if (gameObject.showPoints) {
-				vertices.forEach((v, index: number) => {
-					this.renderer.drawPoint(
-						this.translate.translate(
-							this.rotate.rotateEuler(v, rotation),
-							gameObject.transform,
-						),
-						index,
-					);
-				});
-			}
+
+			if (!gameObject.showPoints) return;
+
+			vertices.forEach((v, index: number) => {
+				this.renderer.drawPoint(
+					this.translate.translate(
+						this.rotate.rotateEuler(v, rotation),
+						gameObject.transform,
+					),
+					index,
+				);
+			});
 		});
 	};
 

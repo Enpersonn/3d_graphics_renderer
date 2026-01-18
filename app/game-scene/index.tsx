@@ -1,7 +1,7 @@
 import { Cube } from 'features/objects/cube';
 import { GameObject } from 'features/objects/game-object';
+import { Plane } from 'features/objects/plane';
 import { useLayoutEffect, useRef } from 'react';
-import { Dodeca } from '../../features/objects/dodeca';
 import { Renderer } from '../../features/renderer';
 import Scene from '../../features/scene';
 
@@ -10,26 +10,36 @@ export function GameScene() {
 	const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
 
 	const gameObjects = [
-		new GameObject(
-			{ x: 1, y: 0, z: 2 },
-			{ x: 0.3, y: 0.5, z: 0.1 },
-			new Cube(),
-			false,
-			'#66ddec',
-		),
-		new GameObject(
-			{ x: -1, y: -1, z: 3 },
-			{ x: 3, y: 2, z: 1 },
-			new Cube(),
-			true,
-		),
-		new GameObject(
-			{ x: -3, y: 3, z: 7 },
-			{ x: 0, y: 0, z: 0 },
-			new Dodeca(),
-			false,
-			'#ae259a',
-		),
+		new GameObject({
+			faceColor: '#b4b4b4',
+			object: new Plane(),
+			transform: { x: -4, y: -4, z: 7 },
+			transformForce: { x: 0, y: 1, z: 0 },
+		}),
+		new GameObject({
+			faceColor: '#31b8ca',
+			object: new Cube(),
+			rotation: { x: 0.3, y: 0.5, z: 0.1 },
+			rotationForce: {
+				x: 0.3 * Math.PI,
+				y: 0.2 * Math.PI,
+				z: 0.1 * Math.PI,
+			},
+			transform: { x: 1, y: 0, z: 2 },
+			transformForce: { x: 0, y: 1, z: 0 },
+		}),
+		new GameObject({
+			faceColor: '#46c527',
+			object: new Cube(),
+			rotation: { x: 3, y: 2, z: 1 },
+			rotationForce: {
+				x: 0.3 * Math.PI,
+				y: 0.2 * Math.PI,
+				z: 0.1 * Math.PI,
+			},
+
+			transform: { x: -1, y: -1, z: 3 },
+		}),
 	];
 
 	const rendererRef = useRef<Renderer | null>(null);
