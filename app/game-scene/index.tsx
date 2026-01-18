@@ -13,8 +13,8 @@ export function GameScene() {
 		new GameObject({
 			faceColor: '#b4b4b4',
 			object: new Plane(),
+			rotationForce: { x: 0, y: 1, z: 0 },
 			transform: { x: -4, y: -4, z: 7 },
-			transformForce: { x: 0, y: 1, z: 0 },
 		}),
 		new GameObject({
 			faceColor: '#31b8ca',
@@ -26,7 +26,7 @@ export function GameScene() {
 				z: 0.1 * Math.PI,
 			},
 			transform: { x: 1, y: 0, z: 2 },
-			transformForce: { x: 0, y: 1, z: 0 },
+			transformForce: { x: 0, y: 0, z: 0 },
 		}),
 		new GameObject({
 			faceColor: '#46c527',
