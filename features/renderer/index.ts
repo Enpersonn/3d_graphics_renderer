@@ -79,7 +79,11 @@ export class Renderer {
 		ctx.closePath();
 		ctx.stroke();
 
-		ctx.fillStyle = color;
+		const debugColor1 = `#ff0000`;
+		const debugColor2 = `#00ff00`;
+		const debugColor3 = `#0000ff`;
+		ctx.fillStyle =
+			i % 3 === 0 ? debugColor1 : i % 3 === 1 ? debugColor2 : debugColor3;
 		ctx.fill();
 	}
 }
