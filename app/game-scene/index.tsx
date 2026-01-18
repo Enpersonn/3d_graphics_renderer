@@ -13,20 +13,40 @@ export function GameScene() {
 		new GameObject({
 			faceColor: '#b4b4b4',
 			object: new Plane(),
-			rotationForce: { x: 0, y: 1, z: 0 },
-			transform: { x: -4, y: -4, z: 7 },
+			rotation: { x: 0, y: 0, z: 0 },
+			transform: { x: -4, y: -4, z: 12 },
+		}),
+		new GameObject({
+			faceColor: '#ca3139',
+			object: new Cube(),
+			rotationForce: {
+				x: -10.3 * Math.PI,
+				y: -10.2 * Math.PI,
+				z: -10.1 * Math.PI,
+			},
+			transform: { x: -1, y: 1, z: 5 },
 		}),
 		new GameObject({
 			faceColor: '#31b8ca',
 			object: new Cube(),
-			rotation: { x: 0.3, y: 0.5, z: 0.1 },
+			rotation: { x: 1, y: 0.76, z: 0.69 },
 			rotationForce: {
 				x: 0.3 * Math.PI,
 				y: 0.2 * Math.PI,
 				z: 0.1 * Math.PI,
 			},
 			transform: { x: 1, y: 0, z: 2 },
-			transformForce: { x: 0, y: 0, z: 0 },
+		}),
+		new GameObject({
+			faceColor: '#134349',
+			object: new Cube(),
+			rotation: { x: 0.3, y: 0.5, z: 0.1 },
+			rotationForce: {
+				x: -0.3 * Math.PI,
+				y: 0.2 * Math.PI,
+				z: -0.5 * Math.PI,
+			},
+			transform: { x: 1.5, y: 1, z: 3 },
 		}),
 		new GameObject({
 			faceColor: '#46c527',
@@ -38,7 +58,7 @@ export function GameScene() {
 				z: 0.1 * Math.PI,
 			},
 
-			transform: { x: -1, y: -1, z: 3 },
+			transform: { x: -2, y: -2, z: 3 },
 		}),
 	];
 

@@ -2,8 +2,8 @@
 
 ## IMPORTANT
 
-- [ ] implement *Homogeneous Coordinates*   **[Priority]**
-- [ ] upgrade to use *Perspective matrix*
+- [ ] implement [*Homogeneous Coordinates*](https://en.wikipedia.org/wiki/Homogeneous_coordinates)   **[Priority]**
+- [ ] upgrade to use [*Perspective matrix*](https://www.scratchapixel.com/lessons/3d-basic-rendering/perspective-and-orthographic-projection-matrix/building-basic-perspective-projection-matrix.html)
 
 ## Scene
 
@@ -14,14 +14,14 @@
 ## Rendering
 
 - [X] Add face culling
-- [ ] Add painter's algorithm              **[Priority]**
+- [ ] Add [painter's algorithm](https://en.wikipedia.org/wiki/Painter%27s_algorithm)**[Priority]**
 - [ ] Add face texture
 - [ ] Add face lighting
 - [ ] Add face shadow
 
 ## After C++ rewrite
 
-- [ ] Add Z-buffer
+- [ ] Add [Z-buffer](https://en.wikipedia.org/wiki/Depth_buffer)
 - [ ] Add face reflection
 - [ ] Add face dispersion
 - [ ] Add face chromatic aberration

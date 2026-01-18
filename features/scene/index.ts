@@ -21,7 +21,17 @@ export default class Scene {
 		this.renderer.clear();
 		this.renderer.renderSkyBox(this.viewPosition);
 
-		this.gameObjects.forEach((gameObject) => {
+		// NOT PERMENANT SOLUTION. Just to have basic depth sorting.
+		// TODO: Implement proper depth sorting. Painter's algorithm: (https://en.wikipedia.org/wiki/Painter%27s_algorithm)
+		const sortedGameObjects = this.gameObjects.sort((a, b) => {
+			const aZdistance = a.transform.z - this.viewPosition.z;
+			const bZdistance = b.transform.z - this.viewPosition.z;
+			return bZdistance - aZdistance;
+		});
+
+		// TODO: Start of painters algorithm
+		// Instead of looping over the gameobjects we add all faces to a list and sort them by their z-distance to the view position.
+		sortedGameObjects.forEach((gameObject) => {
 			const { object, transform, rotation } = gameObject;
 			const { faces, vertices } = object;
 
