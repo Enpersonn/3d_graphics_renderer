@@ -1,3 +1,4 @@
+import { Camera } from 'features/objects/camera';
 import { Cube } from 'features/objects/cube';
 import { GameObject } from 'features/objects/game-object';
 import { Plane } from 'features/objects/plane';
@@ -62,12 +63,18 @@ export function GameScene() {
 		}),
 	];
 
+	const camera = new Camera({
+		rotation: { x: 0, y: 0, z: 0 },
+		transform: { x: 0, y: 0, z: 0 },
+		transformForce: { x: 0, y: 0, z: 0 },
+	});
+
 	const rendererRef = useRef<Renderer | null>(null);
 	if (!rendererRef.current) rendererRef.current = new Renderer();
 
 	const sceneRef = useRef<Scene | null>(null);
 	if (!sceneRef.current)
-		sceneRef.current = new Scene(rendererRef.current, gameObjects);
+		sceneRef.current = new Scene(rendererRef.current, gameObjects, camera);
 
 	const renderer = rendererRef.current;
 	const scene = sceneRef.current;

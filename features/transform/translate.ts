@@ -1,7 +1,14 @@
-import { Vector3 } from 'features/shared/vector';
+import { calculateMatrix4 } from 'features/calculations/matrix';
+import type { Vector4 } from 'features/shared/vector';
 
-export class Translate {
-	public translate(p: Vector3, t: Vector3) {
-		return new Vector3(p.x + t.x, p.y + t.y, p.z + t.z);
-	}
+export default function translationMatrix(input: Vector4) {
+	return calculateMatrix4(
+		[
+			[1, 0, 0, input.x],
+			[0, 1, 0, input.y],
+			[0, 0, 1, input.z],
+			[0, 0, 0, 1],
+		],
+		input,
+	);
 }

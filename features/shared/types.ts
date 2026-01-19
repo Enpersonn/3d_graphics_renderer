@@ -3,9 +3,6 @@ export type Vector2 = {
 	y: number;
 };
 
-export type Vector4 = {
-	x: number;
-	y: number;
-	z: number;
-	w: number;
-};
+
+export type NumberArray4 = [number, number, number, number]
+export type Matrix4 = [NumberArray4, NumberArray4, NumberArray4, NumberArray4]

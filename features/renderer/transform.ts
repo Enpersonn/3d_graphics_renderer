@@ -1,6 +1,7 @@
 //MAINE FUNCTIONS (NOT AI COMMENTED)
 
-import type { Vector2, Vector3 } from 'features/shared/types';
+import type { Vector2 } from 'features/shared/types';
+import type { Vector3 } from 'features/shared/vector';
 
 // converts world space to view space
 const project = (point: Vector3) => {
