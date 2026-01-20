@@ -1,4 +1,4 @@
-import type { Vector3 } from '../shared/vector';
+import type { Vector3, Vector4 } from '../shared/vector';
 import { worldToScreen } from './transform';
 
 export class Renderer {
@@ -26,12 +26,12 @@ export class Renderer {
 		this.ctx.clearRect(0, 0, this.width, this.height);
 	}
 
-	drawPoint(Vector3: Vector3, index: number) {
+	drawPoint(v: Vector4, index: number) {
 		if (!this.ctx || !this.game) return;
-		const point = worldToScreen(Vector3, this.game as HTMLCanvasElement);
+		const point = worldToScreen(v, this.game as HTMLCanvasElement);
 
 		const calculateFontSize = () => {
-			const z = Vector3.z;
+			const z = v.z;
 			const fontSize = 150;
 			return fontSize / z;
 		};
@@ -52,7 +52,7 @@ export class Renderer {
 		);
 	}
 
-	drawLine(Wpoint1: Vector3, Wpoint2: Vector3) {
+	drawLine(Wpoint1: Vector4, Wpoint2: Vector4) {
 		if (!this.ctx || !this.game) return;
 		const point1 = worldToScreen(Wpoint1, this.game);
 		const point2 = worldToScreen(Wpoint2, this.game);
@@ -63,7 +63,7 @@ export class Renderer {
 		this.ctx.stroke();
 	}
 
-	drawFace(points: Vector3[], i: number, color: string) {
+	drawFace(points: Vector4[], i: number, color: string) {
 		const ctx = this.ctx;
 		if (!ctx || !this.game) return;
 		ctx.beginPath();

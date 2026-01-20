@@ -1,5 +1,8 @@
-import type { Vector3 } from 'features/shared/vector';
+export function dotProduct(a: number[], b: number[]): number {
+	const q: number[] = [0];
 
-export function dotProduct(a: Vector3, b: Vector3): number {
-	return a.x * b.x + a.y * b.y + a.z * b.z;
+	a.forEach((v, i) => {
+		q[i] = v * b[i];
+	});
+	return q.reduce((acc, cur) => acc + cur);
 }

@@ -1,32 +1,51 @@
-import { Vector3 } from 'features/shared/vector';
+import { calculateMatrix4 } from 'features/calculations/matrix';
+import type { Vector3, Vector4 } from 'features/shared/vector';
 
-function rotateX(p: Vector3, a: number): Vector3 {
-	const { x, y, z } = p;
+export function rotateX(input: Vector4, a: number): Vector4 {
 	const c = Math.cos(a),
 		s = Math.sin(a);
-	return new Vector3(x, y * c - z * s, y * s + z * c);
+	return calculateMatrix4(
+		[
+			[1, 0, 0, 0],
+			[0, c, -s, 0],
+			[0, s, c, 0],
+			[0, 0, 0, 1],
+		],
+		input,
+	);
 }
-function rotateY(p: Vector3, a: number): Vector3 {
-	const { x, y, z } = p;
+
+export function rotateY(input: Vector4, a: number): Vector4 {
 	const c = Math.cos(a),
 		s = Math.sin(a);
-	return new Vector3(x * c - z * s, y, x * s + z * c);
+	return calculateMatrix4(
+		[
+			[c, 0, s, 0],
+			[0, 1, 0, 0],
+			[-s, 0, c, 0],
+			[0, 0, 0, 1],
+		],
+		input,
+	);
 }
-
-function rotateZ(p: Vector3, a: number): Vector3 {
-	const { x, y, z } = p;
+export function rotateZ(input: Vector4, a: number): Vector4 {
 	const c = Math.cos(a),
 		s = Math.sin(a);
-	return new Vector3(x * c - y * s, x * s + y * c, z);
+	return calculateMatrix4(
+		[
+			[c, -s, 0, 0],
+			[s, c, 0, 0],
+			[0, 0, 1, 0],
+			[0, 0, 0, 1],
+		],
+		input,
+	);
 }
 
-export function rotateEuler(p: Vector3, rot: Vector3): Vector3 {
-	const { x, y, z } = rot;
-	const x_rotated = rotateX(p, x);
-	const y_rotated = rotateY(x_rotated, y);
-	const z_rotated = rotateZ(y_rotated, z);
-	return z_rotated;
+export function rotationMatrix(input: Vector4, angle: Vector3): Vector4 {
+	const { x, y, z } = angle;
+	const z_rotated = rotateZ(input, z);
+	const y_rotated = rotateY(z_rotated, y);
+	const x_rotated = rotateX(y_rotated, x);
+	return x_rotated;
 }
-
-
-export function rotationMatrix()

@@ -11,9 +11,10 @@ export class Vector3 {
 	}
 
 	public add(
-		v: Vector3 | { x: number; y: number; z: number },
+		v?: Vector3 | { x: number; y: number; z: number },
 		s: number = 1,
 	): this {
+		if (v === undefined) return this;
 		this.x += v.x * s;
 		this.y += v.y * s;
 		this.z += v.z * s;
@@ -28,16 +29,24 @@ export class Vector3 {
 		this.z -= v.z * s;
 		return this;
 	}
+
+	public toArray() {
+		return [
+			this.x,
+			this.y,
+			this.z
+		]
+	}
 }
 
 export class Vector4 {
-	private valueArray: NumberArray4
+	private valueArray: NumberArray4;
 	public x: number = 0;
 	public y: number = 0;
 	public z: number = 0;
 	public w: number = 0;
-	constructor(v: NumberArray4) {
-		this.valueArray = v;
+	constructor(v?: NumberArray4) {
+		this.valueArray = v ?? [0, 0, 0, 0];
 		this.setValues();
 	}
 
@@ -61,6 +70,18 @@ export class Vector4 {
 		this.setValues();
 		return this;
 	}
+	public multiply(
+		v: Vector4 | NumberArray4,
+	): this {
+		if (Array.isArray(v)) {
+			this.valueArray = this.valueArray.map((value, index) => value * v[index]) as NumberArray4;
+		} else {
+			this.valueArray = this.valueArray.map((value, index) => value * v.valueArray[index]) as NumberArray4;
+		}
+		this.setValues();
+		return this;
+	}
+
 	public sub(v: Vector4 | NumberArray4, s: number = 1): this {
 		if (Array.isArray(v)) {
 			this.valueArray = this.valueArray.map((value, index) => value - v[index] * s) as NumberArray4;
@@ -69,5 +90,15 @@ export class Vector4 {
 		}
 		this.setValues();
 		return this;
+	}
+
+
+	public toArray() {
+		return [
+			this.x,
+			this.y,
+			this.z,
+			this.w
+		]
 	}
 }
