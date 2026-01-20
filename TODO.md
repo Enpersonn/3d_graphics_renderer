@@ -13,7 +13,8 @@
 
 ## Rendering
 
-- [X] Add face culling
+- [X] Add back-face culling
+- [ ] Add Frustem culling
 - [ ] Add [painter's algorithm](https://en.wikipedia.org/wiki/Painter%27s_algorithm)**[Priority]**
 - [ ] Add face texture
 - [ ] Add face lighting
