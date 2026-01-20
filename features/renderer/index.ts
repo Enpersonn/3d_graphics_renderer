@@ -56,14 +56,15 @@ export class Renderer {
 		if (!this.ctx || !this.game) return;
 		const point1 = worldToScreen(Wpoint1, this.game);
 		const point2 = worldToScreen(Wpoint2, this.game);
-		this.ctx = { ...this.ctx, lineWidth: 2, strokeStyle: this.pointColor };
+		this.ctx.lineWidth = 2;
+		this.ctx.strokeStyle = this.pointColor;
 		this.ctx.beginPath();
 		this.ctx.moveTo(point1.x, point1.y);
 		this.ctx.lineTo(point2.x, point2.y);
 		this.ctx.stroke();
 	}
 
-	drawFace(points: Vector4[], i: number, color: string) {
+	drawFace(points: Vector4[], color: string) {
 		const ctx = this.ctx;
 		if (!ctx || !this.game) return;
 		ctx.beginPath();
@@ -77,14 +78,18 @@ export class Renderer {
 		}
 
 		ctx.closePath();
-		ctx.stroke();
 
-		// const debugColor1 = `#ff0000`;
-		// const debugColor2 = `#00ff00`;
-		// const debugColor3 = `#0000ff`;
-		// ctx.fillStyle =
-		// 	i % 3 === 0 ? debugColor1 : i % 3 === 1 ? debugColor2 : debugColor3;
+		ctx.lineWidth = 0;
+
 		ctx.fillStyle = color;
+		ctx.strokeStyle = color;
+		ctx.stroke();
+		ctx.fill();
+
+		//Shadow 
+		ctx.fillStyle = "#00000050";
+		ctx.strokeStyle = "#00000050";
+		ctx.stroke();
 		ctx.fill();
 	}
 

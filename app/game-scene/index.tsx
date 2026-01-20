@@ -27,6 +27,7 @@ export function GameScene() {
 				z: -0.1 * Math.PI,
 			},
 			scale: { x: 2, y: 4, z: 1 },
+			showPoints: true,
 			transform: { x: -1, y: 1, z: 5 },
 		}),
 		new GameObject({
