@@ -15,16 +15,18 @@ export function GameScene() {
 			faceColor: '#b4b4b4',
 			object: new Plane(),
 			rotation: { x: 0, y: 0, z: 0 },
+			scale: { x: 7, y: 7, z: 1 },
 			transform: { x: -4, y: -4, z: 12 },
 		}),
 		new GameObject({
 			faceColor: '#ca3139',
 			object: new Cube(),
 			rotationForce: {
-				x: -10.3 * Math.PI,
-				y: -10.2 * Math.PI,
-				z: -10.1 * Math.PI,
+				x: -0.3 * Math.PI,
+				y: 0.2 * Math.PI,
+				z: -0.1 * Math.PI,
 			},
+			scale: { x: 2, y: 4, z: 1 },
 			transform: { x: -1, y: 1, z: 5 },
 		}),
 		new GameObject({
@@ -36,6 +38,7 @@ export function GameScene() {
 				y: 0.2 * Math.PI,
 				z: 0.1 * Math.PI,
 			},
+			scale: { x: 0.5, y: 0.5, z: 2 },
 			transform: { x: 1, y: 0, z: 2 },
 		}),
 		new GameObject({
