@@ -2,6 +2,7 @@ import { Camera } from 'features/objects/camera';
 import { Cube } from 'features/objects/cube';
 import { GameObject } from 'features/objects/game-object';
 import { Plane } from 'features/objects/plane';
+import { Vector3 } from 'features/shared/vector';
 import { useLayoutEffect, useRef } from 'react';
 import { Renderer } from '../../features/renderer';
 import Scene from '../../features/scene';
@@ -68,13 +69,14 @@ export function GameScene() {
 	];
 
 	const camera = new Camera({
-		rotation: { x: 0, y: 0, z: 0 },
 		transform: { x: 0, y: 0, z: 0 },
 		transformForce: { x: 0, y: 0, z: 0 },
 	});
 
+	const sun = new Vector3(5, 5, -4);
+
 	const rendererRef = useRef<Renderer | null>(null);
-	if (!rendererRef.current) rendererRef.current = new Renderer();
+	if (!rendererRef.current) rendererRef.current = new Renderer(sun);
 
 	const sceneRef = useRef<Scene | null>(null);
 	if (!sceneRef.current)

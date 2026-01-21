@@ -3,13 +3,9 @@ import calculateLightAngle from "./angle-to-light"
 
 
 export default function calculateShadowOpacity(f: Vector4[], l: Vector3) {
-    const MAX_SHADOW_STRENGTH = 255
-    const lightIntensity = calculateLightAngle(f, l)
-
-    const shadowStrenght = MAX_SHADOW_STRENGTH / lightIntensity
-
-    const hex = toHexByte(shadowStrenght)
-    return hex
+    const diffuse = calculateLightAngle(f, l)
+    const alpha = (1 - diffuse) * 255
+    return toHexByte(alpha)
 }
 
 function toHexByte(value: number): string {

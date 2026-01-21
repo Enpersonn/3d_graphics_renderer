@@ -1,5 +1,5 @@
 import calculateShadowOpacity from 'features/calculations/shadow-opacity';
-import { Vector3, type Vector4 } from '../shared/vector';
+import { type Vector3, Vector4 } from '../shared/vector';
 import { worldToScreen } from './transform';
 
 export class Renderer {
@@ -14,6 +14,8 @@ export class Renderer {
 
 	private ctx?: CanvasRenderingContext2D;
 	private game?: HTMLCanvasElement;
+
+	constructor(private light: Vector3) { }
 	setContext(ctx: CanvasRenderingContext2D) {
 		this.ctx = ctx;
 	}
@@ -27,7 +29,7 @@ export class Renderer {
 		this.ctx.clearRect(0, 0, this.width, this.height);
 	}
 
-	drawPoint(v: Vector4, index: number, color?: string) {
+	drawPoint(v: Vector4, index?: number, color?: string) {
 		if (!this.ctx || !this.game) return;
 		const point = worldToScreen(v, this.game as HTMLCanvasElement);
 
@@ -37,13 +39,6 @@ export class Renderer {
 			return fontSize / z;
 		};
 
-		this.ctx.font = `${calculateFontSize()}px Arial`;
-		this.ctx.fillStyle = this.textColor;
-		this.ctx.fillText(
-			index.toString(),
-			point.x - this.pointSize / 2,
-			point.y - this.pointSize / 2,
-		);
 		this.ctx.fillStyle = color ?? this.pointColor;
 		this.ctx.fillRect(
 			point.x - this.pointSize / 2,
@@ -51,6 +46,16 @@ export class Renderer {
 			this.pointSize,
 			this.pointSize,
 		);
+
+		if (index !== undefined) {
+			this.ctx.font = `${calculateFontSize()}px Arial`;
+			this.ctx.fillStyle = this.textColor;
+			this.ctx.fillText(
+				index.toString(),
+				point.x - this.pointSize / 2,
+				point.y - this.pointSize / 2,
+			);
+		}
 	}
 
 	drawLine(Wpoint1: Vector4, Wpoint2: Vector4) {
@@ -63,6 +68,11 @@ export class Renderer {
 		this.ctx.moveTo(point1.x, point1.y);
 		this.ctx.lineTo(point2.x, point2.y);
 		this.ctx.stroke();
+	}
+
+	drawLight() {
+		const l = this.light;
+		this.drawPoint(new Vector4([l.x, l.y, l.z, 0]), undefined, "#ffff00");
 	}
 
 	drawFace(points: Vector4[], color: string) {
@@ -88,9 +98,8 @@ export class Renderer {
 		ctx.fill();
 
 		//Shadow ¨
-		const DebugPointLight = new Vector3(5, 5, -4)
-		const shadowOpacity = calculateShadowOpacity(points, DebugPointLight)
-		const shadowColor = `#000000${shadowOpacity}`
+		const shadowOpacity = calculateShadowOpacity(points, this.light);
+		const shadowColor = `#000000${shadowOpacity}`;
 		ctx.fillStyle = shadowColor;
 		ctx.strokeStyle = shadowColor;
 		ctx.stroke();

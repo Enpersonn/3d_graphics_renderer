@@ -1,5 +1,4 @@
 import { checkFace } from 'features/calculations/check-face';
-import calcTriangleCentorid from 'features/calculations/triangle-centroid';
 import type { Camera } from 'features/objects/camera';
 import type { GameObject } from 'features/objects/game-object';
 import { Vector3, Vector4 } from 'features/shared/vector';
@@ -77,6 +76,8 @@ export default class Scene {
 					this.renderer.drawPoint(v, i);
 				});
 			}
+
+
 		});
 	};
 
