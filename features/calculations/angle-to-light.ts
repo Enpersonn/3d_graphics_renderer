@@ -8,6 +8,7 @@ export default function calculateLightAngle(f: Vector4[], l: Vector3): number {
     const normal = caluclateNormal(f);
     const ligtDir = new Vector3(l.x, l.y, l.z).sub(p);
     const cosTheta = dotProduct(normal.toArray(), ligtDir.toArray());
-
+    const diffuse = Math.max(0, cosTheta);
+    return diffuse
 
 }

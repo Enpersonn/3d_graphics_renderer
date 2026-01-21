@@ -4,7 +4,7 @@ export class Runtime {
 	private rafId: number | null = null;
 	private lastTs: number | null = null;
 	public FPS = 30;
-	constructor(private frame: (deltaTime: number) => void) {}
+	constructor(private frame: (deltaTime: number) => void) { }
 
 	private isRunning = false;
 
@@ -34,6 +34,10 @@ export class Runtime {
 		this.lastTs = null;
 		this.frame(0);
 	};
+
+	step = () => {
+		this.frame(0.05)
+	}
 
 	reset = (values: [Vector3, Vector3][]) => {
 		for (const [p, q] of values) Object.assign(q, p);

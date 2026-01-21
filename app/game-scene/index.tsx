@@ -122,6 +122,13 @@ export function GameScene() {
 							Stop
 						</button>
 						<button
+							onClick={scene.step}
+							className="h-8 w-32 rounded-md bg-yellow-500 text-white"
+							type="button"
+						>
+							Step
+						</button>
+						<button
 							onClick={scene.reset}
 							className="h-8 w-32 rounded-md bg-gray-500 text-white"
 							type="button"

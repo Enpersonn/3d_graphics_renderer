@@ -1,4 +1,5 @@
-import type { Vector3, Vector4 } from '../shared/vector';
+import calculateShadowOpacity from 'features/calculations/shadow-opacity';
+import { Vector3, type Vector4 } from '../shared/vector';
 import { worldToScreen } from './transform';
 
 export class Renderer {
@@ -26,7 +27,7 @@ export class Renderer {
 		this.ctx.clearRect(0, 0, this.width, this.height);
 	}
 
-	drawPoint(v: Vector4, index: number) {
+	drawPoint(v: Vector4, index: number, color?: string) {
 		if (!this.ctx || !this.game) return;
 		const point = worldToScreen(v, this.game as HTMLCanvasElement);
 
@@ -43,7 +44,7 @@ export class Renderer {
 			point.x - this.pointSize / 2,
 			point.y - this.pointSize / 2,
 		);
-		this.ctx.fillStyle = this.pointColor;
+		this.ctx.fillStyle = color ?? this.pointColor;
 		this.ctx.fillRect(
 			point.x - this.pointSize / 2,
 			point.y - this.pointSize / 2,
@@ -86,9 +87,12 @@ export class Renderer {
 		ctx.stroke();
 		ctx.fill();
 
-		//Shadow 
-		ctx.fillStyle = "#00000050";
-		ctx.strokeStyle = "#00000050";
+		//Shadow ¨
+		const DebugPointLight = new Vector3(5, 5, -4)
+		const shadowOpacity = calculateShadowOpacity(points, DebugPointLight)
+		const shadowColor = `#000000${shadowOpacity}`
+		ctx.fillStyle = shadowColor;
+		ctx.strokeStyle = shadowColor;
 		ctx.stroke();
 		ctx.fill();
 	}

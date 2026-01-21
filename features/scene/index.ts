@@ -1,4 +1,5 @@
 import { checkFace } from 'features/calculations/check-face';
+import calcTriangleCentorid from 'features/calculations/triangle-centroid';
 import type { Camera } from 'features/objects/camera';
 import type { GameObject } from 'features/objects/game-object';
 import { Vector3, Vector4 } from 'features/shared/vector';
@@ -61,9 +62,14 @@ export default class Scene {
 				]),
 			);
 
-			faces.forEach((face) => {
-				const faceVectores = face.map(index => vectorVertices[index])
-				if (faceVectores.length !== 3 || !checkFace(faceVectores, this.viewPosition)) return;
+			faces.forEach((face, i) => {
+				const faceVectores = face.map((index) => vectorVertices[index]);
+
+				if (
+					faceVectores.length !== 3 ||
+					!checkFace(faceVectores, this.viewPosition)
+				)
+					return;
 				this.renderer.drawFace(faceVectores, gameObject.faceColor);
 			});
 			if (gameObject.showPoints) {
@@ -71,7 +77,6 @@ export default class Scene {
 					this.renderer.drawPoint(v, i);
 				});
 			}
-
 		});
 	};
 
@@ -79,5 +84,6 @@ export default class Scene {
 
 	run = this.runtime.run;
 	stop = this.runtime.stop;
+	step = this.runtime.step;
 	reset = () => { };
 }
