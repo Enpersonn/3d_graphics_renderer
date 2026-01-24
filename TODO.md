@@ -19,6 +19,7 @@
 - [ ] Add face texture
 - [ ] Add face lighting
 - [ ] Add face shadow
+- [ ] Add UV map supporet with vertex rewrite
 
 ## After C++ rewrite
 
