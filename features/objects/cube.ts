@@ -1,17 +1,21 @@
-import type { Object3D } from 'features/objects/types';
-import { Vector3 } from 'features/shared/vector';
+import type { Mesh, Object3D } from 'features/objects/types';
+import { Vector3 } from 'features/shared/classes/vector';
+import Vertex from 'features/shared/classes/vertex';
 
-const vertices = [
-	new Vector3(0.5, 0.5, 0.5),
-	new Vector3(-0.5, 0.5, 0.5),
+const vertices_old = [
+	new Vector3(-0.5, -0.5, -0.5),
+	new Vector3(-0.5, 0.5, -0.5),
+	new Vector3(0.5, 0.5, -0.5),
+	new Vector3(0.5, -0.5, -0.5),
+
 	new Vector3(-0.5, -0.5, 0.5),
+	new Vector3(-0.5, 0.5, 0.5),
+	new Vector3(0.5, 0.5, 0.5),
 	new Vector3(0.5, -0.5, 0.5),
 
-	new Vector3(0.5, 0.5, -0.5),
-	new Vector3(-0.5, 0.5, -0.5),
-	new Vector3(-0.5, -0.5, -0.5),
-	new Vector3(0.5, -0.5, -0.5),
 ];
+
+
 
 const faces = [
 	[0, 1, 2],
@@ -32,7 +36,72 @@ const faces = [
 	[2, 6, 7],
 	[2, 7, 3],
 ];
-export class Cube implements Object3D {
+
+
+const vertices = [
+	// FRONT
+	new Vertex(new Vector3(-0.5, -0.5, -0.5), new Vector3(0, 0, -1)),
+	new Vertex(new Vector3(-0.5, 0.5, -0.5), new Vector3(0, 0, -1)),
+	new Vertex(new Vector3(0.5, 0.5, -0.5), new Vector3(0, 0, -1)),
+	new Vertex(new Vector3(0.5, -0.5, -0.5), new Vector3(0, 0, -1)),
+
+	new Vertex(new Vector3(-0.5, -0.5, -0.5), new Vector3(0, -1, 0)),
+	new Vertex(new Vector3(-0.5, 0.5, -0.5), new Vector3(0, 1, 0)),
+	new Vertex(new Vector3(0.5, 0.5, -0.5), new Vector3(0, -1, 0)),
+	new Vertex(new Vector3(0.5, -0.5, -0.5), new Vector3(0, 1, 0)),
+
+	new Vertex(new Vector3(-0.5, -0.5, -0.5), new Vector3(-1, 0, 0)),
+	new Vertex(new Vector3(-0.5, 0.5, -0.5), new Vector3(-1, 0, 0)),
+	new Vertex(new Vector3(0.5, 0.5, -0.5), new Vector3(1, 0, 0)),
+	new Vertex(new Vector3(0.5, -0.5, -0.5), new Vector3(1, 0, 0)),
+
+	//BACK
+
+	new Vertex(new Vector3(-0.5, -0.5, 0.5), new Vector3(0, 0, 1)),
+	new Vertex(new Vector3(-0.5, 0.5, 0.5), new Vector3(0, 0, 1)),
+	new Vertex(new Vector3(0.5, 0.5, 0.5), new Vector3(0, 0, 1)),
+	new Vertex(new Vector3(0.5, -0.5, 0.5), new Vector3(0, 0, 1)),
+
+	new Vertex(new Vector3(-0.5, -0.5, 0.5), new Vector3(0, -1, 0)),
+	new Vertex(new Vector3(-0.5, 0.5, 0.5), new Vector3(0, 1, 0)),
+	new Vertex(new Vector3(0.5, 0.5, 0.5), new Vector3(0, -1, 0)),
+	new Vertex(new Vector3(0.5, -0.5, 0.5), new Vector3(0, 1, 0)),
+
+	new Vertex(new Vector3(-0.5, -0.5, 0.5), new Vector3(-1, 0, 0)),
+	new Vertex(new Vector3(-0.5, 0.5, 0.5), new Vector3(-1, 0, 0)),
+	new Vertex(new Vector3(0.5, 0.5, 0.5), new Vector3(1, 0, 0)),
+	new Vertex(new Vector3(0.5, -0.5, 0.5), new Vector3(1, 0, 0)),
+
+];
+
+const indexBuffer = [
+	0, 1, 2,
+	2, 3, 0,
+
+	0, 4, 7,
+	7, 3, 0,
+
+	0, 4, 5,
+	5, 1, 0,
+
+	1, 5, 6,
+	6, 2, 1,
+
+	4, 5, 6,
+	6, 7, 4,
+
+	3, 2, 6,
+	6, 7, 3
+
+];
+
+export class Cube_old implements Object3D {
 	public faces = faces;
-	public vertices = vertices;
+	public vertices = vertices_old;
+}
+
+export class Cube implements Mesh {
+
+	public indexBuffer = indexBuffer;
+	public vertecies = vertices;
 }

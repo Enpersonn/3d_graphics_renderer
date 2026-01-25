@@ -1,4 +1,5 @@
-import type { Vector3 } from 'features/shared/vector';
+import type { Vector3 } from "features/shared/classes/vector"
+	;
 
 export class Runtime {
 	private rafId: number | null = null;

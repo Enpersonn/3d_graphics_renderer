@@ -1,4 +1,4 @@
-import { Vector3, type Vector4 } from 'features/shared/vector';
+import { Vector3, type Vector4 } from "features/shared/classes/vector";
 import { dotProduct } from './dot-product';
 import caluclateNormal from './normal';
 import calcTriangleCentorid from './triangle-centroid';

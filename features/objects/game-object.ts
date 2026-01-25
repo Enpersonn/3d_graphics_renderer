@@ -1,5 +1,5 @@
 import type { Object3D } from 'features/objects/types';
-import { Vector3 } from '../shared/vector';
+import { Vector3 } from 'features/shared/classes/vector';
 
 interface GameObjectProps {
 	transform?: { x: number; y: number; z: number };

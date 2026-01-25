@@ -1,4 +1,5 @@
-import { Vector3 } from 'features/shared/vector';
+import { Vector3 } from "features/shared/classes/vector"
+	;
 import type { Object3D } from './types';
 export class Plane implements Object3D {
 	public vertices: Vector3[] = [

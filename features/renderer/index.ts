@@ -1,5 +1,5 @@
 import calculateShadowOpacity from 'features/calculations/shadow-opacity';
-import { type Vector3, Vector4 } from '../shared/vector';
+import { type Vector3, Vector4 } from 'features/shared/classes/vector';
 import { worldToScreen } from './transform';
 
 export class Renderer {

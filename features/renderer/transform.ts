@@ -1,7 +1,7 @@
 //MAINE FUNCTIONS (NOT AI COMMENTED)
 
+import type { Vector4 } from 'features/shared/classes/vector';
 import type { Vector2 } from 'features/shared/types';
-import type { Vector4 } from 'features/shared/vector';
 
 // converts world space to view space
 const project = (point: Vector4) => {
@@ -23,4 +23,3 @@ const worldToScreen = (point: Vector4, game: HTMLCanvasElement) =>
 	screen(project(point), game);
 
 export { worldToScreen };
-

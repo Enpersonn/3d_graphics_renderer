@@ -1,4 +1,4 @@
-import { Vector3 } from 'features/shared/vector';
+import { Vector3 } from "features/shared/classes/vector";
 
 export function crossProduct(a: Vector3, b: Vector3): Vector3 {
 	return new Vector3(

@@ -1,7 +1,7 @@
 import { checkFace } from 'features/calculations/check-face';
 import type { Camera } from 'features/objects/camera';
 import type { GameObject } from 'features/objects/game-object';
-import { Vector3, Vector4 } from 'features/shared/vector';
+import { Vector3, Vector4 } from 'features/shared/classes/vector';
 import { rotationMatrix } from 'features/transform/rotate';
 import scaleMatrix from 'features/transform/scale';
 import translationMatrix from 'features/transform/translate';
@@ -76,8 +76,6 @@ export default class Scene {
 					this.renderer.drawPoint(v, i);
 				});
 			}
-
-
 		});
 	};
 

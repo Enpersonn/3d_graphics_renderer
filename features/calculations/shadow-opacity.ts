@@ -1,4 +1,4 @@
-import type { Vector3, Vector4 } from "features/shared/vector"
+import type { Vector3, Vector4 } from "features/shared/classes/vector";
 import calculateLightAngle from "./angle-to-light"
 
 

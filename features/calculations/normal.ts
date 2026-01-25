@@ -1,4 +1,4 @@
-import { Vector3, type Vector4 } from 'features/shared/vector';
+import { Vector3, type Vector4 } from "features/shared/classes/vector";
 import { crossProduct } from './cross-product';
 
 export default function caluclateNormal(v: Vector4[]): Vector3 {

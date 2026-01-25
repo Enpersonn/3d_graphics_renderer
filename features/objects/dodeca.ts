@@ -1,4 +1,5 @@
-import { Vector3 } from 'features/shared/vector';
+import { Vector3 } from "features/shared/classes/vector"
+	;
 import type { Object3D } from './types';
 
 const PHI = (1 + Math.sqrt(5)) / 2;

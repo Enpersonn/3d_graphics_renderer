@@ -1,5 +1,6 @@
 import { calculateMatrix4 } from 'features/calculations/matrix';
-import type { Vector3, Vector4 } from 'features/shared/vector';
+import type { Vector3, Vector4 } from "features/shared/classes/vector"
+	;
 
 export function rotateX(input: Vector4, a: number): Vector4 {
 	const c = Math.cos(a),
