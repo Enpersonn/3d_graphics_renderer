@@ -3,9 +3,11 @@ import {
 	calculateMatrix4wMatrix4,
 	calculateMatrix4wVector4,
 } from 'features/calculations/matrix';
+import calculateShadowOpacity from 'features/calculations/shadow-opacity';
 import type { Camera } from 'features/objects/camera';
 import type { GameObject } from 'features/objects/game-object';
-import { Vector3, Vector4 } from 'features/shared/classes/vector';
+import { worldToScreen } from 'features/renderer/transform';
+import { Vector3 } from 'features/shared/classes/vector';
 import { rotationMatrix } from 'features/transform/rotate';
 import scaleMatrix from 'features/transform/scale';
 import translationMatrix from 'features/transform/translate';
@@ -18,6 +20,7 @@ export default class Scene {
 		private renderer: Renderer,
 		private gameObjects: GameObject[],
 		private camera: Camera,
+		private light: Vector3
 	) { }
 
 	frame = (deltaTime: number) => {
@@ -55,7 +58,7 @@ export default class Scene {
 				S,
 			);
 
-			const transformedVectorArray = vertices.map(({ position }) => {
+			const transformedVerteciesPositions = vertices.map(({ position }) => {
 				const { x, y, z } = position;
 				const q = calculateMatrix4wVector4(ModelMatrix, [
 					x,
@@ -71,22 +74,42 @@ export default class Scene {
 				return q;
 			});
 
+
 			for (let k = 0; k < indexBuffer.length; k += 3) {
-				const traiangleVertecies = [
-					transformedVectorArray[indexBuffer[k]],
-					transformedVectorArray[indexBuffer[k + 1]],
-					transformedVectorArray[indexBuffer[k + 2]],
+				const p1 = indexBuffer[k]
+				const p2 = indexBuffer[k + 1]
+				const p3 = indexBuffer[k + 2]
+
+				const transformedPos = [
+					transformedVerteciesPositions[p1],
+					transformedVerteciesPositions[p2],
+					transformedVerteciesPositions[p3],
 				];
-				if (!checkFace(traiangleVertecies, this.viewPosition))
+				if (!checkFace(transformedPos, this.viewPosition))
 					continue;
+
+				const projectedPoints = transformedPos.map(({ x, y, z }) =>
+					worldToScreen(
+						new Vector3(x, y, z),
+						this.renderer.game as HTMLCanvasElement,
+					),
+				);
+
+
+				const shadowOpacity = calculateShadowOpacity(
+					transformedPos,
+					this.light,
+				);
+
 				this.renderer.drawFace(
-					traiangleVertecies,
+					projectedPoints,
 					gameObject.faceColor,
+					shadowOpacity
 				);
 			}
 			if (gameObject.showPoints) {
-				transformedVectorArray.forEach((v, i) => {
-					this.renderer.drawPoint(v, i);
+				transformedVerteciesPositions.forEach((v, i) => {
+					this.renderer.drawPoint(new Vector3(v.x, v.y, v.z), i);
 				});
 			}
 		});

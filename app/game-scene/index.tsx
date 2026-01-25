@@ -76,11 +76,16 @@ export function GameScene() {
 	const sun = new Vector3(5, 5, -4);
 
 	const rendererRef = useRef<Renderer | null>(null);
-	if (!rendererRef.current) rendererRef.current = new Renderer(sun);
+	if (!rendererRef.current) rendererRef.current = new Renderer();
 
 	const sceneRef = useRef<Scene | null>(null);
 	if (!sceneRef.current)
-		sceneRef.current = new Scene(rendererRef.current, gameObjects, camera);
+		sceneRef.current = new Scene(
+			rendererRef.current,
+			gameObjects,
+			camera,
+			sun,
+		);
 
 	const renderer = rendererRef.current;
 	const scene = sceneRef.current;

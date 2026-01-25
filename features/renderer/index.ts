@@ -1,5 +1,6 @@
 import calculateShadowOpacity from 'features/calculations/shadow-opacity';
-import { type Vector3, Vector4 } from 'features/shared/classes/vector';
+import type { Vector3, Vector4 } from 'features/shared/classes/vector';
+import type { Vector2 } from 'features/shared/types';
 import { worldToScreen } from './transform';
 
 export class Renderer {
@@ -13,9 +14,8 @@ export class Renderer {
 	public pointSize: number = 10;
 
 	private ctx?: CanvasRenderingContext2D;
-	private game?: HTMLCanvasElement;
+	public game?: HTMLCanvasElement;
 
-	constructor(private light: Vector3) { }
 	setContext(ctx: CanvasRenderingContext2D) {
 		this.ctx = ctx;
 	}
@@ -29,7 +29,7 @@ export class Renderer {
 		this.ctx.clearRect(0, 0, this.width, this.height);
 	}
 
-	drawPoint(v: Vector4, index?: number, color?: string) {
+	drawPoint(v: Vector3, index?: number, color?: string) {
 		if (!this.ctx || !this.game) return;
 		const point = worldToScreen(v, this.game as HTMLCanvasElement);
 
@@ -58,35 +58,20 @@ export class Renderer {
 		}
 	}
 
-	drawLine(Wpoint1: Vector4, Wpoint2: Vector4) {
-		if (!this.ctx || !this.game) return;
-		const point1 = worldToScreen(Wpoint1, this.game);
-		const point2 = worldToScreen(Wpoint2, this.game);
-		this.ctx.lineWidth = 2;
-		this.ctx.strokeStyle = this.pointColor;
-		this.ctx.beginPath();
-		this.ctx.moveTo(point1.x, point1.y);
-		this.ctx.lineTo(point2.x, point2.y);
-		this.ctx.stroke();
-	}
-
-	drawLight() {
-		const l = this.light;
-		this.drawPoint(new Vector4([l.x, l.y, l.z, 0]), undefined, "#ffff00");
-	}
-
-	drawFace(points: Vector4[], color: string) {
+	drawFace(points: Vector2[], color: string, shadowOpacity: string) {
 		const ctx = this.ctx;
 		if (!ctx || !this.game) return;
 		ctx.beginPath();
 
-		const indexPointScreenSpace = points.map((point) =>
-			worldToScreen(point, this.game as HTMLCanvasElement),
-		);
-		ctx.moveTo(indexPointScreenSpace[0].x, indexPointScreenSpace[0].y);
-		for (let i = 1; i < indexPointScreenSpace.length; i++) {
-			ctx.lineTo(indexPointScreenSpace[i].x, indexPointScreenSpace[i].y);
-		}
+
+		points.forEach(({ x, y }, i) => {
+			if (i === 0) {
+				ctx.moveTo(x, y);
+				return;
+			};
+			ctx.lineTo(x, y);
+
+		})
 
 		ctx.closePath();
 
@@ -98,7 +83,6 @@ export class Renderer {
 		ctx.fill();
 
 		//Shadow ¨
-		const shadowOpacity = calculateShadowOpacity(points, this.light);
 		const shadowColor = `#000000${shadowOpacity}`;
 		ctx.fillStyle = shadowColor;
 		ctx.strokeStyle = shadowColor;
