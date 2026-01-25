@@ -29,43 +29,43 @@ export function GameScene() {
 			},
 			// scale: { x: 2, y: 4, z: 1 },
 			showPoints: true,
-			transform: { x: 0, y: 0, z: 2 },
+			transform: { x: -1, y: 1, z: 4 },
 		}),
-		// new GameObject({
-		// 	faceColor: '#31b8ca',
-		// 	object: new Cube_old(),
-		// 	rotation: { x: 1, y: 0.76, z: 0.69 },
-		// 	rotationForce: {
-		// 		x: 0.3 * Math.PI,
-		// 		y: 0.2 * Math.PI,
-		// 		z: 0.1 * Math.PI,
-		// 	},
-		// 	scale: { x: 0.5, y: 0.5, z: 2 },
-		// 	transform: { x: 1, y: 0, z: 2 },
-		// }),
-		// new GameObject({
-		// 	faceColor: '#134349',
-		// 	object: new Cube_old(),
-		// 	rotation: { x: 0.3, y: 0.5, z: 0.1 },
-		// 	rotationForce: {
-		// 		x: -0.3 * Math.PI,
-		// 		y: 0.2 * Math.PI,
-		// 		z: -0.5 * Math.PI,
-		// 	},
-		// 	transform: { x: 1.5, y: 1, z: 3 },
-		// }),
-		// new GameObject({
-		// 	faceColor: '#46c527',
-		// 	object: new Cube_old(),
-		// 	rotation: { x: 3, y: 2, z: 1 },
-		// 	rotationForce: {
-		// 		x: 0.3 * Math.PI,
-		// 		y: 0.2 * Math.PI,
-		// 		z: 0.1 * Math.PI,
-		// 	},
+		new GameObject({
+			faceColor: '#31b8ca',
+			object: new Cube(),
+			rotation: { x: 1, y: 0.76, z: 0.69 },
+			rotationForce: {
+				x: 0.3 * Math.PI,
+				y: 0.2 * Math.PI,
+				z: 0.1 * Math.PI,
+			},
+			scale: { x: 0.5, y: 0.5, z: 2 },
+			transform: { x: 1, y: 0, z: 2 },
+		}),
+		new GameObject({
+			faceColor: '#134349',
+			object: new Cube(),
+			rotation: { x: 0.3, y: 0.5, z: 0.1 },
+			rotationForce: {
+				x: -0.3 * Math.PI,
+				y: 0.2 * Math.PI,
+				z: -0.5 * Math.PI,
+			},
+			transform: { x: 1.5, y: 1, z: 3 },
+		}),
+		new GameObject({
+			faceColor: '#46c527',
+			object: new Cube(),
+			rotation: { x: 3, y: 2, z: 1 },
+			rotationForce: {
+				x: 0.3 * Math.PI,
+				y: 0.2 * Math.PI,
+				z: 0.1 * Math.PI,
+			},
 
-		// 	transform: { x: -2, y: -2, z: 3 },
-		// }),
+			transform: { x: -2, y: -2, z: 3 },
+		}),
 	];
 
 	const camera = new Camera({
