@@ -1,4 +1,7 @@
 import { checkFace } from 'features/calculations/check-face';
+import {
+	calculateMatrix4wMatrix4, calculateMatrix4wVector4,
+} from 'features/calculations/matrix';
 import type { Camera } from 'features/objects/camera';
 import type { GameObject } from 'features/objects/game-object';
 import { Vector3, Vector4 } from 'features/shared/classes/vector';
@@ -36,43 +39,48 @@ export default class Scene {
 		sortedGameObjects.forEach((gameObject) => {
 			const { object, transform, rotation, scale } = gameObject;
 			if (!object) return;
-			const { faces, vertices } = object;
+			const { indexBuffer, vertices } = object;
 
 			transform.add(gameObject.transformForce, deltaTime);
 			rotation.add(gameObject.rotationForce, deltaTime);
 			scale.add(gameObject.scaleForce, deltaTime);
 
-			const transformedVectorArray = vertices.map(({ x, y, z }) => {
-				return translationMatrix(
-					rotationMatrix(
-						scaleMatrix(new Vector4([x, y, z, 1]), scale),
-						rotation,
-					),
-					gameObject.transform,
-				);
-			});
+			const T = translationMatrix(transform);
+			const R = rotationMatrix(rotation);
+			const S = scaleMatrix(scale);
 
-			const vectorVertices = transformedVectorArray.map((v) =>
-				v.sub([
-					this.viewPosition.x,
-					this.viewPosition.y,
-					this.viewPosition.z,
-					1,
-				]),
+			const ModelMatrix = calculateMatrix4wMatrix4(
+				calculateMatrix4wMatrix4(T, R),
+				S,
 			);
 
-			faces.forEach((face, i) => {
-				const faceVectores = face.map((index) => vectorVertices[index]);
 
-				if (
-					faceVectores.length !== 3 ||
-					!checkFace(faceVectores, this.viewPosition)
-				)
-					return;
-				this.renderer.drawFace(faceVectores, gameObject.faceColor);
+
+			const transformedVectorArray = vertices.map(({ position }) => {
+				const { x, y, z } = position;
+				const q = calculateMatrix4wVector4(ModelMatrix, [x, y, z, 1]).sub(
+					[
+						this.viewPosition.x,
+						this.viewPosition.y,
+						this.viewPosition.z,
+						1
+					]
+				);
+				return q;
 			});
+
+			// faces.forEach((face, i) => {
+			// 	const faceVectores = face.map((index) => vectorVertices[index]);
+
+			// 	if (
+			// 		faceVectores.length !== 3 ||
+			// 		!checkFace(faceVectores, this.viewPosition)
+			// 	)
+			// 		return;
+			// 	this.renderer.drawFace(faceVectores, gameObject.faceColor);
+			// });
 			if (gameObject.showPoints) {
-				vectorVertices.forEach((v, i) => {
+				transformedVectorArray.forEach((v, i) => {
 					this.renderer.drawPoint(v, i);
 				});
 			}

@@ -1,5 +1,5 @@
 import { Camera } from 'features/objects/camera';
-import { Cube_old } from 'features/objects/cube';
+import { Cube, Cube_old } from 'features/objects/cube';
 import { GameObject } from 'features/objects/game-object';
 import { Plane } from 'features/objects/plane';
 import { Vector3 } from 'features/shared/classes/vector';
@@ -21,7 +21,7 @@ export function GameScene() {
 		// }),
 		new GameObject({
 			faceColor: '#ca3139',
-			object: new Cube_old(),
+			object: new Cube(),
 			rotationForce: {
 				x: -0.3 * Math.PI,
 				y: 0.2 * Math.PI,

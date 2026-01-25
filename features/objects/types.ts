@@ -8,7 +8,7 @@ export interface Object3D {
 
 
 export interface Mesh {
-	vertecies: Vertex[];
+	vertices: Vertex[];
 
 	indexBuffer: number[]
 }

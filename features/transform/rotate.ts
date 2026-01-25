@@ -1,52 +1,46 @@
-import { calculateMatrix4 } from 'features/calculations/matrix';
-import type { Vector3, Vector4 } from "features/shared/classes/vector"
-	;
+import { calculateMatrix4wMatrix4 } from "features/calculations/matrix";
+import type { Vector3 } from "features/shared/classes/vector";
+import type { Matrix4 } from "features/shared/types";
 
-export function rotateX(input: Vector4, a: number): Vector4 {
+export function rotateX(a: number): Matrix4 {
 	const c = Math.cos(a),
 		s = Math.sin(a);
-	return calculateMatrix4(
-		[
-			[1, 0, 0, 0],
-			[0, c, -s, 0],
-			[0, s, c, 0],
-			[0, 0, 0, 1],
-		],
-		input,
-	);
+	return [
+		[1, 0, 0, 0],
+		[0, c, -s, 0],
+		[0, s, c, 0],
+		[0, 0, 0, 1],
+	];
 }
 
-export function rotateY(input: Vector4, a: number): Vector4 {
+export function rotateY(a: number): Matrix4 {
 	const c = Math.cos(a),
 		s = Math.sin(a);
-	return calculateMatrix4(
-		[
-			[c, 0, s, 0],
-			[0, 1, 0, 0],
-			[-s, 0, c, 0],
-			[0, 0, 0, 1],
-		],
-		input,
-	);
+	return [
+		[c, 0, s, 0],
+		[0, 1, 0, 0],
+		[-s, 0, c, 0],
+		[0, 0, 0, 1],
+	];
 }
-export function rotateZ(input: Vector4, a: number): Vector4 {
+export function rotateZ(a: number): Matrix4 {
 	const c = Math.cos(a),
 		s = Math.sin(a);
-	return calculateMatrix4(
-		[
-			[c, -s, 0, 0],
-			[s, c, 0, 0],
-			[0, 0, 1, 0],
-			[0, 0, 0, 1],
-		],
-		input,
-	);
+	return [
+		[c, -s, 0, 0],
+		[s, c, 0, 0],
+		[0, 0, 1, 0],
+		[0, 0, 0, 1],
+	];
 }
 
-export function rotationMatrix(input: Vector4, angle: Vector3): Vector4 {
+export function rotationMatrix(angle: Vector3): Matrix4 {
 	const { x, y, z } = angle;
-	const z_rotated = rotateZ(input, z);
-	const y_rotated = rotateY(z_rotated, y);
-	const x_rotated = rotateX(y_rotated, x);
-	return x_rotated;
+	const RZ = rotateZ(z);
+	const RY = rotateY(y);
+	const RX = rotateX(x);
+
+
+
+	return calculateMatrix4wMatrix4(calculateMatrix4wMatrix4(RZ, RY), RX);
 }

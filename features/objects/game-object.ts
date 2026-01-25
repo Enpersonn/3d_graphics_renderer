@@ -1,11 +1,11 @@
-import type { Object3D } from 'features/objects/types';
+import type { Mesh, Object3D } from 'features/objects/types';
 import { Vector3 } from 'features/shared/classes/vector';
 
 interface GameObjectProps {
 	transform?: { x: number; y: number; z: number };
 	rotation?: { x: number; y: number; z: number };
 	scale?: { x: number; y: number; z: number };
-	object?: Object3D;
+	object?: Mesh;
 	showPoints?: boolean;
 	faceColor?: string;
 	rotationForce?: { x: number; y: number; z: number };
@@ -26,7 +26,7 @@ export class GameObject {
 
 	public faceColor: string = '#b4b4b4';
 	public showPoints: boolean = false;
-	public object?: Object3D;
+	public object?: Mesh;
 
 	constructor({ transform, rotation, scale, ...initialProps }: GameObjectProps) {
 		Object.assign(this, initialProps);
