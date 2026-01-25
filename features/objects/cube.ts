@@ -1,40 +1,6 @@
-import type { Mesh, Object3D } from 'features/objects/types';
+import type { Mesh } from 'features/objects/types';
 import { Vector3 } from 'features/shared/classes/vector';
 import Vertex from 'features/shared/classes/vertex';
-
-const vertices_old = [
-	new Vector3(-0.5, -0.5, -0.5),
-	new Vector3(-0.5, 0.5, -0.5),
-	new Vector3(0.5, 0.5, -0.5),
-	new Vector3(0.5, -0.5, -0.5),
-
-	new Vector3(-0.5, -0.5, 0.5),
-	new Vector3(-0.5, 0.5, 0.5),
-	new Vector3(0.5, 0.5, 0.5),
-	new Vector3(0.5, -0.5, 0.5),
-
-];
-
-const faces = [
-	[0, 1, 2],
-	[0, 2, 3],
-
-	[4, 7, 6],
-	[4, 6, 5],
-
-	[0, 3, 7],
-	[0, 7, 4],
-
-	[1, 5, 6],
-	[1, 6, 2],
-
-	[0, 4, 5],
-	[0, 5, 1],
-
-	[2, 6, 7],
-	[2, 7, 3],
-];
-
 
 const v = (x: number, y: number, z: number, nx: number, ny: number, nz: number) =>
 	new Vertex(new Vector3(x, y, z), new Vector3(nx, ny, nz));
@@ -104,9 +70,4 @@ const indexBuffer: number[] = [
 export class Cube implements Mesh {
 	public vertices = vertices;
 	public indexBuffer = indexBuffer;
-}
-
-export class Cube_old implements Object3D {
-	public faces = faces;
-	public vertices = vertices_old;
 }
