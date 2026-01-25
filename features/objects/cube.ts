@@ -15,8 +15,6 @@ const vertices_old = [
 
 ];
 
-
-
 const faces = [
 	[0, 1, 2],
 	[0, 2, 3],
@@ -81,20 +79,26 @@ const vertices: Vertex[] = [
 ];
 
 // 36 indices. Each face uses its own 4 verts.
-// Winding here is CCW when looking at the outside of each face.
+// Winding here is CW when looking at the outside of each face.
 const indexBuffer: number[] = [
 	// -Z
-	0, 1, 2, 0, 2, 3,
+	0, 1, 2,
+	0, 2, 3,
 	// +Z
-	4, 5, 6, 4, 6, 7,
+	4, 5, 6,
+	4, 6, 7,
 	// -X
-	8, 9, 10, 8, 10, 11,
+	8, 9, 10,
+	8, 10, 11,
 	// +X
-	12, 13, 14, 12, 14, 15,
+	12, 13, 14,
+	12, 14, 15,
 	// -Y
-	16, 17, 18, 16, 18, 19,
+	16, 17, 18,
+	16, 18, 19,
 	// +Y
-	20, 21, 22, 20, 22, 23,
+	20, 21, 22,
+	20, 22, 23,
 ];
 
 export class Cube implements Mesh {

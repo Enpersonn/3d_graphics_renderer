@@ -1,6 +1,7 @@
 import { checkFace } from 'features/calculations/check-face';
 import {
-	calculateMatrix4wMatrix4, calculateMatrix4wVector4,
+	calculateMatrix4wMatrix4,
+	calculateMatrix4wVector4,
 } from 'features/calculations/matrix';
 import type { Camera } from 'features/objects/camera';
 import type { GameObject } from 'features/objects/game-object';
@@ -54,31 +55,35 @@ export default class Scene {
 				S,
 			);
 
-
-
 			const transformedVectorArray = vertices.map(({ position }) => {
 				const { x, y, z } = position;
-				const q = calculateMatrix4wVector4(ModelMatrix, [x, y, z, 1]).sub(
-					[
-						this.viewPosition.x,
-						this.viewPosition.y,
-						this.viewPosition.z,
-						1
-					]
-				);
+				const q = calculateMatrix4wVector4(ModelMatrix, [
+					x,
+					y,
+					z,
+					1,
+				]).sub([
+					this.viewPosition.x,
+					this.viewPosition.y,
+					this.viewPosition.z,
+					1,
+				]);
 				return q;
 			});
 
-			// faces.forEach((face, i) => {
-			// 	const faceVectores = face.map((index) => vectorVertices[index]);
-
-			// 	if (
-			// 		faceVectores.length !== 3 ||
-			// 		!checkFace(faceVectores, this.viewPosition)
-			// 	)
-			// 		return;
-			// 	this.renderer.drawFace(faceVectores, gameObject.faceColor);
-			// });
+			for (let k = 0; k < indexBuffer.length; k += 3) {
+				const traiangleVertecies = [
+					transformedVectorArray[indexBuffer[k]],
+					transformedVectorArray[indexBuffer[k + 1]],
+					transformedVectorArray[indexBuffer[k + 2]],
+				];
+				if (!checkFace(traiangleVertecies, this.viewPosition))
+					continue;
+				this.renderer.drawFace(
+					traiangleVertecies,
+					gameObject.faceColor,
+				);
+			}
 			if (gameObject.showPoints) {
 				transformedVectorArray.forEach((v, i) => {
 					this.renderer.drawPoint(v, i);
