@@ -4,6 +4,7 @@
 
 - [X] implement [*Homogeneous Coordinates*](https://en.wikipedia.org/wiki/Homogeneous_coordinates)   **[Priority]**
 - [ ] upgrade to use [*Perspective matrix*](https://www.scratchapixel.com/lessons/3d-basic-rendering/perspective-and-orthographic-projection-matrix/building-basic-perspective-projection-matrix.html)
+- [ ] Add `.obj` file support 
 
 ## Scene
 
