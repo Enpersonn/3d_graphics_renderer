@@ -1,7 +1,6 @@
 import { Camera } from 'features/objects/camera';
-import { Cube, Cube_old } from 'features/objects/cube';
+import { Cube } from 'features/objects/cube';
 import { GameObject } from 'features/objects/game-object';
-import { Plane } from 'features/objects/plane';
 import { Vector3 } from 'features/shared/classes/vector';
 import { useLayoutEffect, useRef } from 'react';
 import { Renderer } from '../../features/renderer';
